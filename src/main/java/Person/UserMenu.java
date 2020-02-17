@@ -40,7 +40,6 @@ public class UserMenu {
         String lastName;
         int age;
         while (counter<numberOfEmployees){
-
                 System.out.println("Type firstName");
                 scanner.nextLine();
                 firstName = scanner.nextLine();
@@ -53,6 +52,7 @@ public class UserMenu {
                 System.out.println("YOU MUST TYPE A NUMBER!!! \n");
                 age=-1;
             }
+
             if (age!=-1) {
                 employeeList.add(new Person(firstName, lastName, age));
                 counter++;
@@ -67,6 +67,7 @@ public class UserMenu {
             sortChooseMenu();
             choose = scanner.nextInt();
         }
+        scanner.close();
             switch (choose) {
                 case 0:
                     type = SortType.FIRSTNAME;
