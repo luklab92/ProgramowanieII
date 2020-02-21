@@ -1,61 +1,59 @@
 package Cryptology;
 
-
 public class Encrypt {
-private String input;
+    private final int big = 'Z' + 1;
+    private final int small = 'z' + 1;
+    private final int backToStart = 'z' - 'a' + 1;
 
-
-
-    public Encrypt(String plainText, int jump) {
-        this.input = plainText;
-        finish(jump);
+    public Encrypt() {
     }
 
-    private String[] split(int jump) {
-        boolean isBig = false;
+    private String[] split(String input, int jump) {
+        boolean isBig;
         String[] output = new String[input.length()];
-        for (int i = 0; i <input.length(); i++) {
+        for (int i = 0; i < input.length(); i++) {
             if (input.charAt(i) != ' ') {
                 int value = input.charAt(i);
 
-                if (isItBigLetter(value)) isBig=true;
-                value = value + jump;
+                isBig = isItBigLetter(value);
+                value += jump;
 
-                if (!isBig)
-                    value = smallLetterValueCheck(value);
                 if (isBig)
                     value = bigLetterValueCheck(value);
+
+                else
+                    value = smallLetterValueCheck(value);
+
                 String s = Character.toString((char) value);
                 output[i] = s;
-            }
-            else output[i] = String.valueOf(input.charAt(i));
+            } else output[i] = String.valueOf(input.charAt(i));
         }
         return output;
-}
+    }
 
-private String finish(int jump) {
-        String[] string = split(jump);
+    public String finish(String input, int jump) {
+        String[] string = split(input, jump);
         StringBuilder sb = new StringBuilder();
-        for (String s: string) {
+        for (String s : string) {
             sb.append(s);
         }
-    System.out.println(sb.toString());
         return sb.toString();
-}
+    }
 
-private int bigLetterValueCheck(int value) {
+    private int bigLetterValueCheck(int value) {
 
-        if (value>90) value=value-90+64;
-    return value;
-}
-
-    private int smallLetterValueCheck(int value) {
-        if (value>122) value=value-122+96;
+        if (value >= big) value = value - backToStart;
         return value;
     }
 
-    private boolean isItBigLetter (int value) {
-        return (value<95) ;
+    private int smallLetterValueCheck(int value) {
+        if (value >= small) value = value - backToStart;
+        return value;
+    }
+
+
+    private boolean isItBigLetter(int value) {
+        return (value < big);
     }
 
 }
